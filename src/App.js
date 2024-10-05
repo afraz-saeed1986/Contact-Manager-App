@@ -1,13 +1,36 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './App.css';
 import {AddContact,EditContact,ViewContact,Contacts,Contact,Navbar} from './components';
 import {Route,Routes,Navigate} from 'react-router-dom'
+import {getAllContacts, getAllGroups} from "./services/contactService";
 
 
 
 const App = () => {
   const [getContacts,setContacts] = useState([]);
+  const [getGroups, setGroups] = useState([]);
   const [loading,setLoading] = useState(false);
+
+  useEffect(()=>{
+ const fetchData = async ()=>{
+      try {
+        setLoading(true);
+        const {data: contactsData} = await getAllContacts();
+        const {data: groupsData} = await getAllGroups();
+        setContacts(contactsData);
+        setGroups(groupsData);
+
+        setLoading(false);
+        
+      } catch (err) {
+        console.log(err.message);
+        setLoading(false);
+      }
+ }
+
+ fetchData();
+  }, []) // [] :یعنی تنها زمانی اجرا شود که کامپوننت ساخته می شود.
+
 
 
   return (
