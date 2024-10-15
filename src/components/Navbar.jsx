@@ -3,9 +3,9 @@ import SearchContact from "./Contacts/SearchContact";
 
 import {PURPLE, BACKGROUND} from '../helpers/colors';
 
-const Navbar = ({query, search}) => {
-    const location = useLocation();
 
+const Navbar = () => {
+    const location = useLocation();
     return (
         <nav className="navbar navbar-dark navbar-expand-sm shadow-lg" style={{backgroundColor: BACKGROUND}}>
             <div className="container">
@@ -21,7 +21,7 @@ const Navbar = ({query, search}) => {
                     {
                         location.pathname === "/contacts"? (
                         <div className="col">
-                            <SearchContact query={query} search={search} />
+                            <SearchContact />
                         </div>
                         ) : null
                     }
