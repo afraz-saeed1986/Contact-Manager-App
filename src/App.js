@@ -42,7 +42,7 @@ const App = () => {
   }, []) // [] :یعنی تنها زمانی اجرا شود که کامپوننت ساخته می شود.
 
 
-const createContactForm = async event =>{
+const createContactForm = async (event) =>{
   event.preventDefault();
   try{
     setLoading((prevLoading) => !prevLoading);
