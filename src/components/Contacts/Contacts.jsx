@@ -2,9 +2,13 @@ import { Link } from "react-router-dom";
 import { CURRENTLINE, ORANGE, PINK } from "../../helpers/colors";
 import Spinner from "../Spinner";
 import Contact from "./Contact";
+import { useContext } from "react";
+import { ContactContext } from "../../context/contactContext";
 // import NotFound from '../../assets/no-found.gif';
 
-const Contacts = ({contacts, loading, confirmDelete})=>{
+const Contacts = ()=>{
+    const {filteredContacts, loading, deleteContact} = useContext(ContactContext);
+
     return(
         <>
           <section className="container">
@@ -28,8 +32,8 @@ const Contacts = ({contacts, loading, confirmDelete})=>{
                 <section className="container">
                 <div className="row">
                     {
-                        contacts.length > 0 ? contacts.map(c => (
-                            <Contact key={c.id} confirmDelete={()=>confirmDelete(c.id, c.fullname)} contact={c} />
+                        filteredContacts.length > 0 ? filteredContacts.map(c => (
+                            <Contact key={c.id} deleteContact={()=>deleteContact(c.id, c.fullname)} contact={c} />
                         )) : 
                         (
                             <div className="text-center py-5" style={{backgroundColor: CURRENTLINE}}>

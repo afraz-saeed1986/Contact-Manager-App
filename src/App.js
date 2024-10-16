@@ -45,14 +45,28 @@ const App = () => {
 const createContactForm = async event =>{
   event.preventDefault();
   try{
-    const {status} = await createContact(contact);
+    setLoading((prevLoading) => !prevLoading);
+    const {status, data} = await createContact(contact);
+
+    /*
+    * NOTE
+    * 1- Rerender-> forceRender, setForceRender
+    * 2- setContacts(data)
+    */
 
     if(status === 201){
+      const allContacts = [...contacts, data];
+
+      setContacts(allContacts);
+      setFilteredContacts(allContacts);
+
       setContact({});
+      setLoading((prevLoading) => !prevLoading);
       navigate("/contacts");
     }
   } catch (err){
      console.log(err);
+     setLoading((prevLoading) => !prevLoading);
   }
 }
 
@@ -88,24 +102,44 @@ const createContactForm = async event =>{
   }
 
   const removeContact = async (contactId)=>{
+          /**
+        * NOTE
+        * 1-forceRender => setForceRender
+        * 2- Server request
+        * 3- Delete local state
+        * 4- Delete state before server request
+        */
+
+       // contacts copy
+      const allContacts = [...contacts];
     try {
-      setLoading(true);
-      const response = await deleteContact(contactId);
-      if(response){
-        const {data: contactsData} = await getAllContacts();
-        setContacts(contactsData);
-        setLoading(false);
+      //setLoading(true);
+      const updatedContact = contacts.filter(c => c.id !== contactId);
+      setContacts(updatedContact);
+      setFilteredContacts(updatedContact);
+
+      //Sending delete request to server
+      const {status} = await deleteContact(contactId);
+
+      if(status !== 200){
+        setContacts(allContacts);
+        setFilteredContacts(allContacts);
+        //setLoading(false);
       }
     } catch (err) {
       console.log(err.message);
-      setLoading(false);
+
+      setContacts(allContacts);
+      setFilteredContacts(allContacts);
+      //setLoading(false);
     }
   }
 
-  const contactSearch = event =>{
+  const contactSearch = (event) =>{
     setContactQuery({...contactQuery, text: event.target.value});
     const allContacts = contacts.filter((contact)=>{
-      return contact.fullname.toString().toLowerCase().includes(event.target.value.toString().toLowerCase());
+      return contact.fullname.toString().toLowerCase()
+      .includes(event.target.value.toString().toLowerCase());
     });
 
     setFilteredContacts(allContacts);
@@ -116,7 +150,8 @@ const createContactForm = async event =>{
       loading,
       setLoading,
       contact,
-      setContact,
+      setContacts,
+      setFilteredContacts,
       contactQuery,
       contacts,
       filteredContacts,
@@ -126,21 +161,12 @@ const createContactForm = async event =>{
       createContact: createContactForm,
       contactSearch
     }}>
-          <div className="App">
+    <div className="App">
       <Navbar />
       <Routes>
           <Route path='/' element={<Navigate to="/contacts" />} />
-          <Route path='/contacts' element={<Contacts 
-                  contacts={filteredContacts} 
-                  loading={loading} 
-                  confirmDelete={confirmDelete}
-                  />} />
-          <Route path='/contacts/add' element={<AddContact 
-                  loading={loading}  
-                  setContactInfo={onContactChange} 
-                  contact = {contact}
-                  groups={groups}
-                  createContactForm = {createContactForm} />} />
+          <Route path='/contacts' element={<Contacts />} />
+          <Route path='/contacts/add' element={<AddContact />} />
           <Route path='/contacts/:contactId' element={<ViewContact />} />
           <Route path='/contacts/edit/:contactId' element={<EditContact />} />
       </Routes>

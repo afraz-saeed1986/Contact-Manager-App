@@ -19,14 +19,12 @@
       "id": 2
     },
     {
-      "fullname": [
-        "سجاد باقرزاده11"
-      ],
-      "photo": "http://test.com/test.jpg",
-      "mobile": "09380001122",
-      "email": "sajad@bagherzadeh.com",
-      "job": "برنامه نویس",
-      "group": "2",
+      "fullname": "test",
+      "photo": "test",
+      "mobile": "0900000000",
+      "email": "test@test.com",
+      "job": "test",
+      "group": "1",
       "id": 3
     }
   ],
