@@ -22,7 +22,7 @@ const EditContact = () => {
       try {
         setLoading(true);
         const { data: contactData } = await getContact(contactId);
-
+        
         setLoading(false);
         setContact(contactData);
       } catch (err) {
@@ -44,7 +44,6 @@ const EditContact = () => {
   const submitForm = async (event) => {
     event.preventDefault();
     try {
-      debugger;
       setLoading(true);
       //Copy state
       //Update state
@@ -63,7 +62,7 @@ const EditContact = () => {
       
       if (status === 200) {
         setLoading(false);
-
+        
         const allContacts = [...contacts];
         const contactIndex = allContacts.findIndex((c) => c.id === parseInt(contactId));
         allContacts[contactIndex] = {...data};

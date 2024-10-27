@@ -1,12 +1,14 @@
 import { useState, useEffect } from 'react';
 import './App.css';
-import {AddContact,EditContact,ViewContact,Contacts,Contact,Navbar} from './components';
+import {AddContact,EditContact,ViewContact,Contacts,Navbar} from './components';
 import {Route,Routes,Navigate, useNavigate} from 'react-router-dom'
 import {createContact, getAllContacts, getAllGroups, deleteContact} from "./services/contactService";
 import {confirmAlert} from 'react-confirm-alert';
 import { COMMENT, CURRENTLINE, FOREGROUND, PURPLE, YELLOW } from './helpers/colors';
 import { ContactContext } from './context/contactContext';
 
+import _ from 'lodash';
+import { contactSchema } from './validations/contactValidation';
 
 
 const App = () => {
@@ -16,11 +18,15 @@ const App = () => {
   const [filteredContacts, setFilteredContacts] = useState([]);
   const [groups, setGroups] = useState([]);
   const [contact, setContact] = useState({});
-  const [contactQuery, setContactQuery] = useState({text: ""});
+  const [errors, setErrors] = useState([]);
+ 
 
   const navigate = useNavigate();
 
   useEffect(()=>{
+ 
+    console.log("Contact Manager App...");
+
  const fetchData = async ()=>{
       try {
         setLoading(true);
@@ -46,6 +52,9 @@ const createContactForm = async (event) =>{
   event.preventDefault();
   try{
     setLoading((prevLoading) => !prevLoading);
+
+    await contactSchema.validate(contact, {abortEarly: false});
+
     const {status, data} = await createContact(contact);
 
     /*
@@ -61,11 +70,13 @@ const createContactForm = async (event) =>{
       setFilteredContacts(allContacts);
 
       setContact({});
+      setErrors([]);
       setLoading((prevLoading) => !prevLoading);
       navigate("/contacts");
     }
   } catch (err){
-     console.log(err);
+     console.log(err.message);
+     setErrors(err.inner);
      setLoading((prevLoading) => !prevLoading);
   }
 }
@@ -135,15 +146,20 @@ const createContactForm = async (event) =>{
     }
   }
 
-  const contactSearch = (event) =>{
-    setContactQuery({...contactQuery, text: event.target.value});
-    const allContacts = contacts.filter((contact)=>{
-      return contact.fullname.toString().toLowerCase()
-      .includes(event.target.value.toString().toLowerCase());
-    });
+  // let filterTimeout;
+  const contactSearch = _.debounce(query =>{
+ 
+  //  clearTimeout(filterTimeout);
 
-    setFilteredContacts(allContacts);
-  };
+   if(!query) return setFilteredContacts([...contacts]);
+
+  //  filterTimeout = setTimeout(() => {
+    setFilteredContacts(contacts.filter((contact)=>{
+      return contact.fullname.toString().toLowerCase()
+      .includes(query.toString().toLowerCase());
+    }));
+  //  }, 1000);
+  }, 1000);
 
   return (
     <ContactContext.Provider value={{
@@ -152,10 +168,11 @@ const createContactForm = async (event) =>{
       contact,
       setContacts,
       setFilteredContacts,
-      contactQuery,
       contacts,
       filteredContacts,
       groups,
+      errors,
+      setErrors,
       onContactChange,
       deleteContact: confirmDelete,
       createContact: createContactForm,

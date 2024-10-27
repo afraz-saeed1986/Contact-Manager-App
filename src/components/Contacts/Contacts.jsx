@@ -2,12 +2,17 @@ import { Link } from "react-router-dom";
 import { CURRENTLINE, ORANGE, PINK } from "../../helpers/colors";
 import Spinner from "../Spinner";
 import Contact from "./Contact";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { ContactContext } from "../../context/contactContext";
 // import NotFound from '../../assets/no-found.gif';
 
-const Contacts = ()=>{
-    const {filteredContacts, loading, deleteContact} = useContext(ContactContext);
+const Contacts = () => {
+    const {filteredContacts, loading, deleteContact,setErrors} = useContext(ContactContext);
+
+    useEffect(()=>{
+        setErrors([]);
+    }, [])
+
 
     return(
         <>
