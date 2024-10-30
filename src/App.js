@@ -8,7 +8,7 @@ import { COMMENT, CURRENTLINE, FOREGROUND, PURPLE, YELLOW } from './helpers/colo
 import { ContactContext } from './context/contactContext';
 
 import _ from 'lodash';
-import { contactSchema } from './validations/contactValidation';
+// import { contactSchema } from './validations/contactValidation';
 
 
 const App = () => {
@@ -18,7 +18,7 @@ const App = () => {
   const [filteredContacts, setFilteredContacts] = useState([]);
   const [groups, setGroups] = useState([]);
   const [contact, setContact] = useState({});
-  const [errors, setErrors] = useState([]);
+  // const [errors, setErrors] = useState([]);
  
 
   const navigate = useNavigate();
@@ -48,14 +48,14 @@ const App = () => {
   }, []) // [] :یعنی تنها زمانی اجرا شود که کامپوننت ساخته می شود.
 
 
-const createContactForm = async (event) =>{
-  event.preventDefault();
+const createContactForm = async (values) =>{
+  // event.preventDefault();
   try{
     setLoading((prevLoading) => !prevLoading);
 
-    await contactSchema.validate(contact, {abortEarly: false});
+    // await contactSchema.validate(contact, {abortEarly: false});
 
-    const {status, data} = await createContact(contact);
+    const {status, data} = await createContact(values);
 
     /*
     * NOTE
@@ -69,14 +69,14 @@ const createContactForm = async (event) =>{
       setContacts(allContacts);
       setFilteredContacts(allContacts);
 
-      setContact({});
-      setErrors([]);
+      // setContact({});
+      // setErrors([]);
       setLoading((prevLoading) => !prevLoading);
       navigate("/contacts");
     }
   } catch (err){
      console.log(err.message);
-     setErrors(err.inner);
+    //  setErrors(err.inner);
      setLoading((prevLoading) => !prevLoading);
   }
 }
@@ -171,8 +171,8 @@ const createContactForm = async (event) =>{
       contacts,
       filteredContacts,
       groups,
-      errors,
-      setErrors,
+      // errors,
+      // setErrors,
       onContactChange,
       deleteContact: confirmDelete,
       createContact: createContactForm,

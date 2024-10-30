@@ -26,6 +26,15 @@
       "job": "test",
       "group": "1",
       "id": 3
+    },
+    {
+      "fullname": "test2",
+      "photo": "http://test.com/text.jpg",
+      "mobile": 9000000000,
+      "email": "test2@js.com",
+      "job": "programmer",
+      "group": "1",
+      "id": 4
     }
   ],
   "groups": [

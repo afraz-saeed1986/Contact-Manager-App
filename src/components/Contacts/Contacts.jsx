@@ -7,11 +7,11 @@ import { ContactContext } from "../../context/contactContext";
 // import NotFound from '../../assets/no-found.gif';
 
 const Contacts = () => {
-    const {filteredContacts, loading, deleteContact,setErrors} = useContext(ContactContext);
+    const {filteredContacts, loading, deleteContact} = useContext(ContactContext);
 
-    useEffect(()=>{
-        setErrors([]);
-    }, [])
+    // useEffect(()=>{
+    //     setErrors([]);
+    // }, [])
 
 
     return(
