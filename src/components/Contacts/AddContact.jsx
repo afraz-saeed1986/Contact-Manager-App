@@ -85,7 +85,7 @@ const AddContact = ()=>{
                             </div>
                             <div className="mb-2">
                               <Field
-                                id="mobile"
+                                name="mobile"
                                 type="number"
                                 className="form-control"
                                 // required={true}
@@ -105,7 +105,7 @@ const AddContact = ()=>{
                             </div>
                             <div className="mb-2">
                               <Field
-                                id="job"
+                                name="job"
                                 type="text"
                                 className="form-control"
                                 // required={true}
