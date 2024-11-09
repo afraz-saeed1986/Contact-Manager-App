@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/Contact-Manager-App/static/css/main.4ecaad4f.css",
+    "main.js": "/Contact-Manager-App/static/js/main.73d839fd.js",
+    "static/media/Spinner.gif": "/Contact-Manager-App/static/media/Spinner.5b35cef0ce49e2af8525.gif",
+    "static/media/no-found.gif": "/Contact-Manager-App/static/media/no-found.8a3fe9fd54d21c85d260.gif",
+    "static/media/man-taking-note.png": "/Contact-Manager-App/static/media/man-taking-note.578e1679689f39584d15.png",
+    "index.html": "/Contact-Manager-App/index.html",
+    "main.4ecaad4f.css.map": "/Contact-Manager-App/static/css/main.4ecaad4f.css.map",
+    "main.73d839fd.js.map": "/Contact-Manager-App/static/js/main.73d839fd.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.4ecaad4f.css",
+    "static/js/main.73d839fd.js"
+  ]
+}
