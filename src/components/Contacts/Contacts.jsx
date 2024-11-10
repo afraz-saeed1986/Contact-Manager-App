@@ -9,11 +9,6 @@ import { ContactContext } from "../../context/contactContext";
 const Contacts = () => {
     const {filteredContacts, loading, deleteContact} = useContext(ContactContext);
 
-    // useEffect(()=>{
-    //     setErrors([]);
-    // }, [])
-
-
     return(
         <>
           <section className="container">

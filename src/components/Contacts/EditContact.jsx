@@ -60,7 +60,7 @@ const EditContact = () => {
       if (status === 200) {
         setLoading(false);
       
-        toast.success("مخاطب با موفقیت ویرایش شد", {icon: ""});
+        toast.info("مخاطب با موفقیت ویرایش شد", {icon: ""});
 
         setContacts(draft => {
           const contactIndex = draft.findIndex((c) => c.id === parseInt(contactId));
